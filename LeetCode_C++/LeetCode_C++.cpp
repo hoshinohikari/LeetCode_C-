@@ -27,11 +27,115 @@ using namespace std;
 /*struct ListNode {
     int val;
     ListNode* next;
-    ListNode(int x) : val(x), next(NULL) {}
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-    return l1;
+    ListNode* p = new ListNode(-1);
+    ListNode* q = p;
+    int carry = 0;
+    while (l1 || l2)
+    {
+        int val1 = l1 ? l1->val : 0;//为空时做加法的位数为0
+        int val2 = l2 ? l2->val : 0;
+
+        int val3 = val1 + val2 + carry;
+        if (val3 >= 10)
+        {
+            val3 = val3 - 10;
+            carry = 1;
+        }
+        else
+            carry = 0;
+        q->next = new ListNode(val3);//创建新节点
+        q = q->next;
+        l1 = l1 ? l1->next : l1;
+        l2 = l2 ? l2->next : l2;//当l1和l2为null时不取其next指针，一直让其保持空的状态
+    }
+    if (carry == 1)//考虑最高位进位的情况
+        q->next = new ListNode(1);
+    return p->next;
+}*/
+
+//3. Longest Substring Without Repeating Characters
+/*int lengthOfLongestSubstring(string s) {
+    if (s == "")
+        return 0;
+    std::string t="";
+    int cs = 0, mx = 1, j = 0;
+    t = t + s[0];
+    for (int i = 0; i < s.length() - 1; i++)
+    {
+        for (j = 0; j < t.length(); j++)
+        {
+            if (s[i + 1] == t[j])
+            {
+                cs = 1;
+                break;
+            }
+        }
+        if (cs)
+        {
+            mx = std::max(mx, int(t.length()));
+            t.erase(0, j + 1);
+            t = t + s[i + 1];
+            cs = 0;
+        }
+        else
+        {
+            t = t + s[i + 1];
+        }
+    }
+
+    return std::max(mx, int(t.length()));
+}*/
+
+//5. Longest Palindromic Substring(Time Limit Exceeded)
+/*string longestPalindrome(string s) {
+    if (s.length() <= 1)
+        return s;
+    bool f = false;
+    string a, r;
+    for (int i = 0; i < s.length() - 1; i++) {
+        if (s[i] == s[i + 1]) {
+            r = s[i];
+            r = r + s[i + 1];
+            for (int j = 1; j < (i < s.length() / 2 ? i + 1 : s.length() - i); j++) {
+                if (s[i - j] != s[i + 1 + j])
+                    break;
+                else {
+                    r = s[i - j] + r;
+                    r = r + s[i + 1 + j];
+                }
+            }
+            if (a.length() < r.length())
+                a = r;
+        }
+    }
+    for (int i = 1; i < s.length(); i++) {
+        if (s[i - 1] == s[i + 1]) {
+            r = s[i - 1];
+            r = r + s[i];
+            r = r + s[i + 1];
+            for (int j = 1; j < (i < s.length() / 2 ? i: s.length() - i-1); j++) {
+                if (s[i - j - 1] != s[i + 1 + j])
+                    break;
+                else {
+                    r = s[i - j - 1] + r;
+                    r = r + s[i + 1 + j];
+                }
+            }
+            if (a.length() < r.length())
+                a = r;
+        }
+    }
+    if (a.length() > r.length())
+        r = a;
+    if (r == "")
+        r = s[0];
+    return r;
 }*/
 
 //7. Reverse Integer
@@ -434,18 +538,9 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
     }
 }*/
 
-//70. Climbing Stairs
-int climbStairs(int n) {
-    for (int i = 0; i < n / 2 + 1; i++) {
-
-    }
-}
-
-//
-
 int main()
 {
-    int tap = 0;
+    /*int tap = 0;
     vector<int> nums;
     nums.push_back(9);
     nums.push_back(8);
@@ -456,11 +551,12 @@ int main()
     nums.push_back(3);
     nums.push_back(2);
     nums.push_back(1);
-    nums.push_back(0);
+    nums.push_back(0);*/
     /*for (int i = 0; i < plusOne(nums).size(); i++) {
         std::cout << plusOne(nums)[i];
     }*/
     //std::cout << mySqrt(4);
+    string s = "babad";
     return 0;
 }
 
