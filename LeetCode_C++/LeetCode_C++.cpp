@@ -100,31 +100,26 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     string a, r;
     for (int i = 0; i < s.length() - 1; i++) {
         if (s[i] == s[i + 1]) {
-            r = s[i];
-            r = r + s[i + 1];
-            for (int j = 1; j < (i < s.length() / 2 ? i + 1 : s.length() - i); j++) {
+            r = s.substr(i, 2);
+            for (int j = 1; i - j >= 0 && i + 1 + j < s.length(); j++) {
                 if (s[i - j] != s[i + 1 + j])
                     break;
                 else {
-                    r = s[i - j] + r;
-                    r = r + s[i + 1 + j];
+                    r = s.substr(i - j, 2 * j + 2);
                 }
             }
             if (a.length() < r.length())
                 a = r;
         }
-    }
-    for (int i = 1; i < s.length(); i++) {
-        if (s[i - 1] == s[i + 1]) {
-            r = s[i - 1];
-            r = r + s[i];
-            r = r + s[i + 1];
-            for (int j = 1; j < (i < s.length() / 2 ? i: s.length() - i-1); j++) {
+        if (i > 0) {
+            r = s.substr(i, 1);
+            for (int j = 0; i - j - 1 >= 0 && i + 1 + j < s.length(); j++) {
                 if (s[i - j - 1] != s[i + 1 + j])
                     break;
                 else {
                     r = s[i - j - 1] + r;
                     r = r + s[i + 1 + j];
+                    r = s.substr(i - j - 1, 2 * j + 3);
                 }
             }
             if (a.length() < r.length())
@@ -136,6 +131,93 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     if (r == "")
         r = s[0];
     return r;
+}*/
+
+//6. ZigZag Conversion
+/*string convert(string s, int numRows) {
+    if (s == "" || numRows <= 1)
+        return s;
+    int m;
+    int x = 0, y = 0;
+    bool f = false;
+    string fin;
+    if (numRows == 2) {
+        vector<vector<char> > array(numRows);
+        if (s.length() % 2)
+            m = s.length() / 2 + 1;
+        else
+            m = s.length() / 2;
+        for (int i = 0; i < numRows; i++) {
+            array[i].resize(m);
+        }
+        for (int i = 0; i < array.size(); i++) {
+            for (int j = 0; j < array[0].size(); j++) {
+                array[i][j] = ' ';
+            }
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if (x >= 2) {
+                x = 0;
+                y = y + 1;
+            }
+            array[x][y] = s[i];
+            x++;
+        }
+        for (int i = 0; i < array.size(); i++) {
+            for (int j = 0; j < array[0].size(); j++) {
+                if (array[i][j] != ' ')
+                    fin = fin + array[i][j];
+            }
+        }
+        return fin;
+    }
+
+    if (s.length() % (2 * numRows - 2) == 0)
+        m = s.length() / (2 * numRows - 2) * (numRows - 1);
+    else if (s.length() % (2 * numRows - 2) <= numRows)
+        m = s.length() / (2 * numRows - 2) * (numRows - 1) + 1;
+    else
+        m = s.length() / (2 * numRows - 2) * (numRows - 1) + (s.length() - s.length() / (2 * numRows - 2) * (2 * numRows - 2) - numRows) + 1;
+
+    vector<vector<char> > array(numRows);
+    for (int i = 0; i < numRows; i++) {
+        array[i].resize(m);
+    }
+
+    for (int i = 0; i < array.size(); i++) {
+        for (int j = 0; j < array[0].size(); j++) {
+            array[i][j] = ' ';
+        }
+    }
+
+    for (int i = 0; i < s.length(); i++) {
+        if (x >= numRows && f == false) {
+            x = numRows - 2;
+            y = y + 1;
+            f = true;
+        }
+        if (f == false) {
+            array[x][y] = s[i];
+            x++;
+        }
+        if (f == true) {
+            array[x][y] = s[i];
+            x--;
+            y++;
+        }
+        if (f == true && x == 0) {
+            f = false;
+        }
+    }
+
+    for (int i = 0; i < array.size(); i++) {
+        for (int j = 0; j < array[0].size(); j++) {
+            if (array[i][j] != ' ')
+                fin = fin + array[i][j];
+        }
+    }
+
+    return fin;
 }*/
 
 //7. Reverse Integer
@@ -169,6 +251,25 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     }
     return int(z);
 }*/
+
+//8. String to Integer (atoi)
+int myAtoi(string str) {
+    string t;
+	for(int i=0;i<str.length();i++){
+        if (str[i] == ' ' && t == "")
+            continue;
+        else if (str[i] == '-' && t == "")
+            t = "-";
+        else if (str[i] >= '0' && str[i] <= '9')
+            t = t + str[i];
+        else
+            break;
+	}
+    if (t == "")
+        return 0;
+    int i = std::stoi(t);
+    return i;
+}
 
 //9. Palindrome Number
 /*bool isPalindrome(int x) {
@@ -556,7 +657,8 @@ int main()
         std::cout << plusOne(nums)[i];
     }*/
     //std::cout << mySqrt(4);
-    string s = "babad";
+    string s = "words and 987";
+    std::cout << myAtoi(s);
     return 0;
 }
 
